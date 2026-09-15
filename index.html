@@ -27,11 +27,50 @@
 <nav id="bottomNav" class="hidden"><button data-screen="homeScreen"><span class="nav-icon">🏠</span>Home</button><button data-screen="destinationsScreen"><span class="nav-icon">🗺️</span>Explore</button><button data-screen="favoritesScreen"><span class="nav-icon">❤️</span>Favorites</button><button data-screen="profileScreen"><span class="nav-icon">👤</span>Profile</button><button id="adminNav" data-screen="adminScreen" class="hidden"><span class="nav-icon">🛠️</span>Admin</button></nav>
 <div id="toast" class="toast"></div></div>
 <script type="module">
-import{initializeApp}from"https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-import{getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut,onAuthStateChanged,sendPasswordResetEmail,updateProfile as updateAuthProfile}from"https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
-import{getFirestore,doc,setDoc,getDoc,collection,addDoc,deleteDoc,query,where,getDocs,serverTimestamp}from"https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
-const firebaseConfig={apiKey:"AIzaSyByRKXWo7mZtryAqemKzK8Iu5HcmCRlaiGg",authDomain:"tourist-application-5aa33.firebaseapp.com",projectId:"tourist-application-5aa33",storageBucket:"tourist-application-5aa33.firebasestorage.app",messagingSenderId:"142710159105",appId:"1:142710159105:web:5cfa5138f3142d37f6cd00",measurementId:"G-C75TT8M1WF"};
-const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app),$=id=>document.getElementById(id);
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+  sendPasswordResetEmail,
+  updateProfile as updateAuthProfile
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  getDoc,
+  collection,
+  addDoc,
+  deleteDoc,
+  query,
+  where,
+  getDocs,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAy2HcjQvcMscb9Jaaq8Q1-9Lab6hH5E3k",
+  authDomain: "tourist-application-5aa33.firebaseapp.com",
+  projectId: "tourist-application-5aa33",
+  storageBucket: "tourist-application-5aa33.firebasestorage.app",
+  messagingSenderId: "142710159105",
+  appId: "1:142710159105:web:5cfa5138f3142d37f6cd00",
+  measurementId: "G-C75TT8M1WF"
+};
+
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const $ = id => document.getElementById(id);
 const fallbackDestinations=[
 {id:"mayon",name:"Mayon Volcano",location:"Albay, Philippines",category:"Nature",emoji:"🌋",description:"Famous for its almost perfectly symmetrical cone and beautiful natural scenery.",rating:4.8,budget:"₱1,500–₱3,000",bestTime:"November–May",activities:["Sightseeing","Photography","Hiking"],tips:["Check the weather before traveling.","Follow local safety restrictions around the volcano."],mapsQuery:"Mayon Volcano, Albay, Philippines",image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Mayon.jpg?width=1200"},
 {id:"hundred-islands",name:"Hundred Islands",location:"Pangasinan, Philippines",category:"Beach",emoji:"🏝️",description:"A group of scenic islands perfect for island hopping, swimming and sightseeing.",rating:4.7,budget:"₱1,000–₱2,500",bestTime:"December–May",activities:["Island hopping","Swimming","Kayaking"],tips:["Bring sunscreen and drinking water.","Book island tours early during peak season."],mapsQuery:"Hundred Islands, Pangasinan, Philippines",image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Philippines_Hundred_Islands.jpg?width=1200"},
@@ -92,3 +131,4 @@ function toggleDark(){document.body.classList.toggle("dark");localStorage.setIte
 onAuthStateChanged(auth,async user=>{currentUser=user;if(user){await loadFavorites();await loadDestinations();await updateAdminVisibility();updateProfile();await updateStats();$("bottomNav").classList.remove("hidden");showScreen("homeScreen")}else{updateProfile();if(!$("bottomNav").classList.contains("hidden")){renderHome();renderCategories();renderDestinations();renderFavorites()}}});
 renderHome();renderCategories();renderDestinations();renderFavorites();
 </script></body></html>
+
