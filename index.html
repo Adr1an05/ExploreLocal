@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#36002d">
+<meta name="mobile-web-app-capable" content="yes">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#36002d">
@@ -130,5 +133,11 @@ document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>showScreen(b.da
 function toggleDark(){document.body.classList.toggle("dark");localStorage.setItem("explorelocal_dark",document.body.classList.contains("dark"))}$("darkBtn").onclick=toggleDark;$("profileDarkBtn").onclick=toggleDark;if(localStorage.getItem("explorelocal_dark")==="true")document.body.classList.add("dark");$("languageSelect").value=localStorage.getItem("explorelocal_language")||"en";applyLanguage($("languageSelect").value);$("languageSelect").onchange=()=>applyLanguage($("languageSelect").value);$("seedBtn").onclick=seedDestinations;$("addDestinationBtn").onclick=addDestination;
 onAuthStateChanged(auth,async user=>{currentUser=user;if(user){await loadFavorites();await loadDestinations();await updateAdminVisibility();updateProfile();await updateStats();$("bottomNav").classList.remove("hidden");showScreen("homeScreen")}else{updateProfile();if(!$("bottomNav").classList.contains("hidden")){renderHome();renderCategories();renderDestinations();renderFavorites()}}});
 renderHome();renderCategories();renderDestinations();renderFavorites();
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js")
+      .then(() => console.log("ExploreLocal Service Worker registered"))
+      .catch(error => console.error("Service Worker error:", error));
+  });
+}
 </script></body></html>
-
